@@ -6,9 +6,24 @@
     text-indent: 6em;
 }
 
+button {
+    background: #dddddd;
+    border-radius: 90px;
+    cursor: pointer;
+    display: inline-block;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: none;
+    vertical-align: middle;
+    transition: box-shadow 0.4s ease;
+    margin: 5px;
+}
+
 div.two-separated {
     width: auto;
-    height: auto;
+    height: 800px;
     border: 1px solid #000000;
     padding: 10px;
     vertical-align: middle;
