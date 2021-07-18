@@ -1,6 +1,8 @@
 import React from 'react';
 import './Board.css';
 import DropdownMenu from './Menu';
+import axios from 'axios';
+
 
 // class PriceBoard extends React.Component {
 
@@ -677,40 +679,27 @@ class ConditionModal extends React.Component {
             quality_inequality: datas.quality_ineqaulity,
             engrave_list: datas.engrave_list,
             battle_list: datas.battle_list,
-        }, () => {
+        }, async () => {
             // 데이터 조회
+
+            const response = await axios({
+              method: 'post',
+              url: 'http://localhost:20080/api/v1/query/accessories',
+              data: {
+                itemType: datas.itemType,
+                grade: datas.grade,
+                quality: datas.quality,
+                engraveList: datas.engrave_list,
+                battleAttrList: datas.battle_list,
+              }
+            });
+
+            this.setState({finding_result: response.data});
+
+
             // 데이터 추출
             // this.setState({finding_result: finding_result})
-            const data = [{
-                name: "울부짖는 공간의 귀걸이",
-                grade: "유물",
-                quality: 80,
-                engrave_list: [
-                    {name: "예리한 둔기", value: 5},
-                    {name: "원한", value: 3},
-                    {name: "이동속도 감소", value: -2}
-                ],
-                battle_list: [
-                    {name: "치명", value: 300},
-                    {name: "특화", value: 300}
-                ],
-                price: 100000
-            }, {
-                name: "울부짖는 시간의 귀걸이",
-                grade: "유물",
-                quality: 80,
-                engrave_list: [
-                    {name: "예리한 둔기", value: 5},
-                    {name: "원한", value: 3},
-                    {name: "이동속도 감소", value: -2}
-                ],
-                battle_list: [
-                    {name: "치명", value: 300},
-                    {name: "특화", value: 300}
-                ],
-                price: 100000
-            }]
-            this.setState({finding_result: data})
+            //   this.setState({finding_result: response.data});
         })
 
     }
