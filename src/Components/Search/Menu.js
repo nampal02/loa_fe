@@ -6,6 +6,7 @@ class DropdownMenu extends React.Component {
         super(props);
         this.state = {
             isActive: false,
+            searchTerm : "",
             selectedItem: this.props.children,
             selected: false,
         }
@@ -46,16 +47,30 @@ class DropdownMenu extends React.Component {
         }
     }
 
+    updateTerm = (event) => {
+        const {
+            target: { value },
+        } = event;
+        this.setState({
+            searchTerm: value,
+        });
+        console.log(this.state.searchTerm)
+    };
     render() {
-        const menuItems = this.props.items.map((item) => (
-            <li style={{'background-color': item.value === null || item.value === undefined || item.value === true ? '#FFFFFF' : 'rgba(0, 0, 0, 0.2)'}}>
-                <a onClick={() => this.onItemClick(item.name, item.value)}>
-                    {item.name}
-                </a>
-            </li>
-        ))
+        const menuItems = this.props.items.map((item) => {
+            if(item.name.includes(this.state.searchTerm)){
+                return(
+                    <li style={{'background-color': item.value === null || item.value === undefined || item.value === true ? '#FFFFFF' : 'rgba(0, 0, 0, 0.2)'}}>
+                        <a onClick={() => this.onItemClick(item.name, item.value)}>
+                            {item.name}
+                        </a>
+                    </li>
+                )
+            }
+        });
         return (
             <div className="menu-container">
+                <input value={this.state.searchTerm} onChange={this.updateTerm}></input>
                 <button ref={this.menuRef} onClick={this.onClick} className="menu-trigger">
                     {this.state.selectedItem}
                 </button>
